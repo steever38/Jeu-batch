@@ -7,7 +7,7 @@
 :: --------------------------------------------------
 
 @echo off & "%__APPDIR__%chcp.com" 65001 >nul
-set version=2.4.5
+set version=2.4.6
 :restart
 if not exist ".\library" goto :download
 if not exist ".\library\users" goto :download
@@ -402,6 +402,7 @@ echo                                                     ║ Informations ║
 echo                                                     ╚══════════════╝
 echo.
 echo Le jeux a été créer par steever38 (discord : steever38#2032)
+echo Github : https://github.com/steever38/Jeu-batch
 echo Le language de programmation utilisé est le batch.
 echo.
 echo Crédits : merci a ericlm128 qui m'a aider a coder les recompenses journalières.
