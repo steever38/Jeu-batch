@@ -7,7 +7,7 @@
 :: --------------------------------------------------
 
 @echo off & "%__APPDIR__%chcp.com" 65001 >nul
-set version=2.4.6
+set version=2.5.0
 :restart
 if not exist ".\library" goto :download
 if not exist ".\library\users" goto :download
@@ -25,8 +25,8 @@ echo                                                    ║ Menu principal ║
 echo                                                    ╚════════════════╝
 echo.
 echo                                  [1] Chifoumi  [2] Quit ou double  [3] Trouve le nombre
-echo                                            [4] Recompense journaliere (new!)
-echo                                       [5] Se deconnecter de %username%  [6] Infos
+echo                                   [4] Machine a sous (new!) [5] Recompense journaliere
+echo                                            [6] Se deconnecter de %username%  [7] Infos
 echo.
 echo Score de %username% : %score%
 echo.
@@ -35,9 +35,10 @@ if %jeu%==44455544455 goto :admin
 if %jeu%==1 goto :chifoumi
 if %jeu%==2 goto :qoud
 if %jeu%==3 goto :TLN
-if %jeu%==4 goto :recompense
-if %jeu%==5 (goto :restart)
-if %jeu%==6 (goto :infos) else (echo Erreur : mauvaise valeur) &color 4 & start .\library\requirements\PlaySound.exe "%WINDIR%\Media\Windows Foreground.wav" & timeout 2 /NOBREAK >nul & goto :menu
+if %jeu%==4 goto :MaS
+if %jeu%==5 goto :recompense
+if %jeu%==6 (goto :restart)
+if %jeu%==7 (goto :infos) else (echo Erreur : mauvaise valeur) &color 4 & start .\library\requirements\PlaySound.exe "%WINDIR%\Media\Windows Foreground.wav" & timeout 2 /NOBREAK >nul & goto :menu
 
 :qoud
 cls
@@ -75,6 +76,18 @@ echo Coup du jeu : 20 points
 echo Points : trouver en une tentative : 150 points, de la 2eme : 100 points, de la 3eme : 50 points, entre la 4eme et la 7eme : 25 points, entre la 8eme et la 10eme : 20 points, plus de 11 tentatives : 10 points
 pause
 goto :jeu_TLN
+
+:MaS
+cls
+echo                                       ╔═══════════════════════════════════════════╗
+echo                                       ║ Bienvenue sur le jeu de la machine a sous ║
+echo                                       ╚═══════════════════════════════════════════╝
+color E
+echo.
+echo Regles : misez des points. Si la combinaison obtenu est 3 fois le meme nombre, vous gagnez 20x la mise. si la combinaison obtenu est 1 2 3, vous gagnez 50x la mise
+echo.
+pause
+goto :jeu_Mas
 
 :cr
 title Se connecter ou creer un compte
@@ -394,6 +407,145 @@ echo >"%FileRecompense%"
 timeout 3 /NOBREAK >nul 
 goto :menu
 pause
+
+:jeu_MaS
+set /a repet1=0
+set /a repet2=0
+set /a repet3=0
+title [utilisateur : %username%]  [score : %score%]  [version : %version%]
+cls
+color E
+set /p score=<".\library\users\%username%\score.dll"
+echo                                                  ╔═══════════════════╗
+echo                                                  ║ La machine a sous ║
+echo                                                  ╚═══════════════════╝
+echo.
+echo                                              [1] Jouer  [2] Menu principal
+echo.
+echo Score de %username% : %score%
+echo.
+set /p objet=Choisis : 
+if %objet%==2 goto :menu
+if not %objet%==1 color 4 & echo Erreur : mauvaise valeur & start .\library\requirements\PlaySound.exe "%WINDIR%\Media\Windows Foreground.wav" & timeout 2 /NOBREAK >nul & goto :jeu_MaS
+
+cls
+echo                                           ╔═══════════════════════════════════╗
+echo                                           ║ La machine a sous misez une somme ║
+echo                                           ╚═══════════════════════════════════╝
+
+set /p mise=Votre mise : 
+if %mise% GTR %score% color 4 & echo Erreur : vous n'avez pas assez de point & start .\library\requirements\PlaySound.exe "%WINDIR%\Media\Windows Foreground.wav" & timeout 2 /NOBREAK >nul & goto :jeu_MaS
+set /a score = %score% - %mise%
+echo -%mise% points
+echo %score% >".\library\users\%username%\score.dll"
+title [utilisateur : %username%]  [score : %score%]  [version : %version%]
+timeout 2 >nul
+
+:repet1
+color 4
+cls
+color E
+echo.
+echo.
+set /a nb1= %random%%%6
+::set /a nb1= 3
+echo                                                    ╔═══╗ ╔═══╗ ╔═══╗
+echo                                                    ║ %nb1% ║ ║ - ║ ║ - ║
+echo                                                    ╚═══╝ ╚═══╝ ╚═══╝
+set /a repet1=repet1+1
+echo [%repet1%]
+ping -n 2 127.0.0.1 > nul
+if %repet1% == 3 goto :repet2
+color 4
+goto :repet1
+
+:repet2
+color 4
+cls
+color E
+echo.
+echo.
+set /a nb2= %random%%%6
+::set /a nb2= 3
+echo                                                    ╔═══╗ ╔═══╗ ╔═══╗
+echo                                                    ║ %nb1% ║ ║ %nb2% ║ ║ - ║
+echo                                                    ╚═══╝ ╚═══╝ ╚═══╝
+set /a repet2=repet2+1
+echo [%repet2%]
+ping -n 2 127.0.0.1 > nul
+if %repet2% == 3 goto :repet3
+color 4
+goto :repet2
+
+:repet3
+color 4
+cls
+color E
+echo.
+echo.
+set /a nb3= %random%%%6
+::set /a nb3= 3
+echo                                                    ╔═══╗ ╔═══╗ ╔═══╗
+echo                                                    ║ %nb1% ║ ║ %nb2% ║ ║ %nb3% ║
+echo                                                    ╚═══╝ ╚═══╝ ╚═══╝
+set /a repet3=repet3+1
+echo [%repet3%]
+ping -n 2 127.0.0.1 > nul
+if %repet3% == 3 goto :verif_LaS1
+color 4
+goto :repet3
+
+:verif_LaS1
+if %nb1% == %nb2% goto :verif_LaS2
+goto :verif_LaS3
+
+:verif_LaS2
+if %nb2% == %nb3% goto :LaS_win1
+goto :verif_LaS3
+
+:verif_LaS3
+if not %nb1% == 1 goto :LaS_lose
+if not %nb2% == 2 goto :LaS_lose
+if not %nb3% == 3 goto :LaS_lose
+goto :LaS_win2
+
+:LaS_win1
+start .\library\requirements\PlaySound.exe "%WINDIR%\Media\tada.wav"
+color a
+set /a gain = %mise% * 20
+set /a score = %score% + %gain%
+echo %score% >".\library\users\%username%\score.dll"
+title [utilisateur : %username%]  [score : %score%]  [version : %version%]
+
+echo.
+echo Win! vous gagnez 20x votre mise (+ %gain% points !)
+pause
+goto :jeu_MaS
+
+
+:LaS_win2
+start .\library\requirements\PlaySound.exe "%WINDIR%\Media\tada.wav"
+color a
+set /a gain = %mise% * 50
+set /a score = %score% + %gain%
+echo %score% >".\library\users\%username%\score.dll"
+title [utilisateur : %username%]  [score : %score%]  [version : %version%]
+
+echo.
+echo Big win! vous gagnez 50x votre mise (+ %gain% points !)
+pause
+goto :jeu_MaS
+
+:LaS_lose
+color 4
+echo.
+echo Vous avez perdu...
+pause
+goto :jeu_MaS
+
+
+
+
 
 :infos
 cls
