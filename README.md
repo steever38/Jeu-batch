@@ -10,6 +10,7 @@ Les différents jeux :
 -Pierre Papier Ciseaux
 -Quit ou double
 -Trouve le nombre
+-Machine a sous
 
 
 Créateur : steever38
