@@ -15,6 +15,6 @@ Les différents jeux :
 
 Créateur : steever38
 Merci de me demander avant de modifier ce projet
-Discord : steever38#2032
+Discord : steever38#0252
 
 © Tous droits réservés - 2022
