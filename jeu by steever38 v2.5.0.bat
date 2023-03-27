@@ -553,8 +553,8 @@ echo                                                     ╔══════�
 echo                                                     ║ Informations ║
 echo                                                     ╚══════════════╝
 echo.
-echo Le jeux a été créer par steever38 (discord : steever38#2032)
-echo Github : https://github.com/steever38/Jeu-batch
+echo Le jeux a été créer par steever38 (discord : steever38#0252)
+echo Github : https://github.com/steever38
 echo Le language de programmation utilisé est le batch.
 echo.
 echo Crédits : merci a ericlm128 qui m'a aider a coder les recompenses journalières.
